@@ -123,22 +123,22 @@ export const login = (username, password) => async (dispatch) => {
 Project Start Guide
 To initiate the project, carefully follow these step-by-step instructions:
 
-Clone the project repository from the provided Git URL.\
+Clone the project repository from the provided Git URL.
 
 ### `git clone <https://github.com/hanu7674/provision-store-test>`
 
-Install project dependencies using the following command:\
+Install project dependencies using the following command:
 
 ### `npm install`
 
 
 ## Available Scripts
 
-In the project directory, you can run:\
+In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
