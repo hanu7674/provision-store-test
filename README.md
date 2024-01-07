@@ -125,7 +125,7 @@ To initiate the project, carefully follow these step-by-step instructions:
 
 Clone the project repository from the provided Git URL.\
 
-### `git clone <repository_url>`
+### `git clone <https://github.com/hanu7674/provision-store-test>`
 
 Install project dependencies using the following command:\
 
