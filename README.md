@@ -1,10 +1,140 @@
-# Getting Started with Create React App
+# Project Overview - Folder Structure, Development Challenges, and Initialization Steps
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Folder Structure:
+
+- **src:**
+  - **Assets:**
+    - **Images:**
+      - logo.png
+      - search.svg
+    - constants.js
+  - **Components:**
+    - About
+    - ErrorBoundary
+    - Footer
+    - Loading
+    - Login-form
+    - NavBar
+    - Products
+    - TopButton
+    - RouterComponent.jsx
+  - **Enhancers:**
+    - monitorReducer.js
+  - **Middleware:**
+    - logger.js
+    - constants.js
+  - **Pages:**
+    - About
+    - Login
+    - Products
+    - AppRoutes.jsx
+    - index.jsx
+  - **Reducers:**
+    - auth.js
+    - index.js
+    - products.js
+    - types.js
+  - **Redux:**
+    - auth.js
+    - configureStore.js
+    - products.js
+  - **Session:**
+    - AuthContext.js
+    - withAuthentication.jsx
+  - App.css
+  - App.js
+  - index.css
+  - index.js
+
+- **public:**
+  - **Assets:**
+    - **Images:**
+      - **favicon:**
+        - ... Images
+  - index.html
+  - manifest.json
+  - robots.txt
+
+- **node_modules**
+
+## Development Difficulties
+
+While developing the application, several challenges were encountered. Some of the difficulties include:
+
+- **Login Module Integration:**
+  - Integrating the login module with secure email and password validation proved challenging, especially ensuring proper validation and encryption.
+  
+- **Search Functionality:**
+  - Implementing the search functionality with Angular Material cards in the product list module required meticulous handling to ensure a smooth user experience and accurate results.
+  
+- **Authentication Handling:**
+  - Managing authentication and correctly passing the access token as a header in API requests posed challenges, requiring thorough understanding of security measures.
+  
+- **API Clarification:**
+  - While communicating with Kailash about the API, there was a need for clarification on fetching the access token. This required additional communication to resolve the issue and ensure proper API integration. After Reviewing and updating the API server, Including "Authorization" header in the POST API from the updated assignment requirements pdf, the issue was successfully resolved.
+
+  The resolved code for fetching the authentication token is as follows:
+
+```javascript
+export const login = (username, password) => async (dispatch) => {
+  dispatch(loginRequest());
+  
+  try {
+    const hashedPassword = sha256(password).toString();
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Basic UHJvbWlsbzpxNCE1NkBaeSN4MiRHQg==");
+    
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', hashedPassword);
+    formData.append('grant_type', 'password');
+    
+    const response = await fetch('https://apiv2stg.promilo.com/user/oauth/token', {
+      method: 'POST',
+      headers: myHeaders,
+      body: formData,
+    });
+    
+    if (response) {
+      const data = await response.json();
+      
+      if (data.status.code === 200) {
+        const token = data.response.access_token;
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userData', JSON.stringify(data.response));
+        dispatch(loginSuccess(data));
+        dispatch(notify({ message: `Login success`, status: 'success' }));
+        dispatch(notify({ message: `Redirecting to Products`, status: 'loading' }));
+        
+        setTimeout(() => {
+          window.location.href = '/products';
+        }, 1000);
+      } else {
+        dispatch(loginFailure(data));
+        dispatch(notify({ message: data.status.message, status: 'error' }));
+      }
+    }
+  } catch (error) {
+    dispatch(loginFailure(error.message));
+  }
+};
+```
+
+Project Start Guide
+To initiate the project, carefully follow these step-by-step instructions:
+
+Clone the project repository from the provided Git URL.\
+
+### `git clone <repository_url>`
+
+Install project dependencies using the following command:\
+
+### `npm install`
+
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, you can run:\
 
 ### `npm start`
 
